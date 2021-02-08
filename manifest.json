@@ -1,0 +1,10 @@
+{
+    "name": "QA World call selector",
+    "version": "1.0",
+    "description": "Selectd open calls",
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["./background.js"]
+    },
+    "permissions": ["declarativeContent", "tabs", "https://app.qa-world.com/calls", "storage"]
+}
