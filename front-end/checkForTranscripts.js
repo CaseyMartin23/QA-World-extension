@@ -2,10 +2,10 @@ try {
   const transcriptDiv = document.getElementsByClassName("container-md")[0]
     .children[2].children[0].children[0].children[0];
 
-  const fakeLink = document.createElement("a");
-  fakeLink.href =
-    "https://www.google.com/search?q=color+picker&oq=color+p&aqs=chrome.0.69i59j69i57j0j0i20i263j46j0l3.6341j0j7&sourceid=chrome&ie=UTF-8";
-  document.body.appendChild(fakeLink);
+  // const fakeLink = document.createElement("a");
+  // fakeLink.href =
+  //   "https://www.google.com/search?q=color+picker&oq=color+p&aqs=chrome.0.69i59j69i57j0j0i20i263j46j0l3.6341j0j7&sourceid=chrome&ie=UTF-8";
+  // document.body.appendChild(fakeLink);
 
   const getBestLink = () => {
     const allTableRows = Array.from(transcriptDiv.getElementsByTagName("tr"));
@@ -34,8 +34,8 @@ try {
       Array.from(transcriptDiv.querySelectorAll("a[id^='queue-']")).length
     );
 
-    fakeLink.click();
     console.log("%chighestTimeLink->", "color: #ffdd00", bestLink.outerHTML);
+    bestLink.click();
   };
 
   const isTranscriptsAvailable = () => {
