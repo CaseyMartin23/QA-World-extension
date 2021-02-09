@@ -84,3 +84,29 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
   chrome.tabs.onUpdated.removeListener();
 });
+
+chrome.tabs.onRemoved.addListener(() => {
+  injectForegroundScript();
+  chrome.tabs.onRemoved.removeListener();
+});
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.goToQaWorld && message.goToQaWorld === "go to qa world") {
+    chrome.tabs.query({ url: qaWorldLink }, (tabsWithLink) => {
+      console.log("tabs-with-qaworld-link->", tabsWithLink);
+      if (tabsWithLink.length > 0) {
+        chrome.windows.update(
+          tabsWithLink[0].windowId,
+          { focused: true },
+          () => {
+            chrome.tabs.update(tabsWithLink[0].id, { active: true });
+          }
+        );
+      } else {
+        chrome.tabs.create({ active: true, url: qaWorldLink });
+      }
+    });
+  }
+
+  chrome.runtime.onMessage.removeListener();
+});
