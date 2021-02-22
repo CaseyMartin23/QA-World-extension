@@ -108,5 +108,27 @@ chrome.runtime.onMessage.addListener((message) => {
     });
   }
 
+  if (message.notifyUser && message.notifyUser === "found link") {
+    chrome.tabs.query({ url: qaWorldLink }, (qaWorldTabs) => {
+      if (qaWorldTabs.length > 0) {
+        chrome.windows.update(
+          qaWorldTabs[0].windowId,
+          { focused: true },
+          () => {
+            chrome.tabs.update(qaWorldTabs[0].id, { active: true });
+          }
+        );
+      }
+    });
+
+    chrome.notifications.create({
+      title: "Found Link!",
+      message: " Found Best Link For You!",
+      iconUrl: "./notification-logo.png",
+      type: "basic",
+      silent: false,
+    });
+  }
+
   chrome.runtime.onMessage.removeListener();
 });

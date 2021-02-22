@@ -2,6 +2,8 @@ try {
   const transcriptDiv = document.getElementsByClassName("container-md")[0]
     .children[2].children[0].children[0].children[0];
 
+  let searchIntervalId = null;
+
   const fakeLink = document.createElement("a");
   fakeLink.href =
     "https://www.google.com/search?q=color+picker&oq=color+p&aqs=chrome.0.69i59j69i57j0j0i20i263j46j0l3.6341j0j7&sourceid=chrome&ie=UTF-8";
@@ -35,7 +37,15 @@ try {
     );
 
     console.log("%chighestTimeLink->", "color: #ffdd00", bestLink.outerHTML);
-    // bestLink.click();
+
+    if (searchIntervalId) {
+      chrome.runtime.sendMessage({ notifyUser: "found link" });
+
+      clearInterval(searchIntervalId);
+      chrome.storage.local.set({ searchButtonState: "stopped" });
+    }
+
+    bestLink.click();
     // fakeLink.click();
   };
 
@@ -45,15 +55,23 @@ try {
 
     console.log("%cChecking for Transcriptions...", "color: #34eb37");
 
-    if (noTranscrpits === transcriptDiv.outerHTML) {
-    } else {
+    if (transcriptDiv.outerHTML !== noTranscrpits) {
       console.log("transcriptDiv->", transcriptDiv.outerHTML);
+
       getBestLink();
-      return true;
     }
   };
 
-  setInterval(isTranscriptsAvailable, 2000);
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message && message.startSearch) {
+      if (message.startSearch === "start") {
+        searchIntervalId = setInterval(isTranscriptsAvailable, 2000);
+      } else {
+        clearInterval(searchIntervalId);
+        searchIntervalId = null;
+      }
+    }
+  });
 } catch (err) {
   console.error(err.message);
 }

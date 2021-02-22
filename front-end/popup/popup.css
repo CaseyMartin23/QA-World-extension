@@ -21,15 +21,13 @@ body {
   flex-grow: 10;
 }
 
-#paused_search-info {
+#search-stop-info {
   display: none;
+  color: #fbff07;
 }
 
 #loading-info {
   display: none;
-}
-
-#search-text {
   color: #2bc400;
 }
 
@@ -69,7 +67,6 @@ body {
 
 .footer {
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
 }
 
@@ -84,8 +81,6 @@ button {
   border: solid #3367d6 1px;
   border-radius: 2px;
   outline: none;
-  /* -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s; */
   cursor: pointer;
   overflow: hidden;
 }
@@ -114,6 +109,8 @@ button:disabled {
   opacity: 0.5;
 }
 
-#go-to-button {
-  margin-left: 22px;
+#start-stop-button {
+  background-color: #45f714;
+  border-color: #45f714;
+  color: #23384c;
 }
