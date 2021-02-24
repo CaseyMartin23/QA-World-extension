@@ -4,11 +4,6 @@ try {
 
   let searchIntervalId = null;
 
-  const fakeLink = document.createElement("a");
-  fakeLink.href =
-    "https://www.google.com/search?q=color+picker&oq=color+p&aqs=chrome.0.69i59j69i57j0j0i20i263j46j0l3.6341j0j7&sourceid=chrome&ie=UTF-8";
-  document.body.appendChild(fakeLink);
-
   const getBestLink = () => {
     const allTableRows = Array.from(transcriptDiv.getElementsByTagName("tr"));
     let highestTime = 0;
@@ -46,7 +41,6 @@ try {
     }
 
     bestLink.click();
-    // fakeLink.click();
   };
 
   const isTranscriptsAvailable = () => {
